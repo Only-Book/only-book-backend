@@ -1,6 +1,8 @@
 package org.myongjithon.onlybook.domain.category.service;
 
 import lombok.AllArgsConstructor;
+import org.myongjithon.onlybook.domain.category.dto.CategoryResponseDTO;
+import org.myongjithon.onlybook.domain.category.dto.CreateCategoryDTO;
 import org.myongjithon.onlybook.domain.category.entity.Category;
 import org.myongjithon.onlybook.domain.category.repository.CategoryRepository;
 import org.myongjithon.onlybook.exception.NotFoundException;
@@ -15,21 +17,20 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryService {
 
-    @Autowired
     private final CategoryRepository categoryRepository;
 
-    public Category createCategory(String name) {
-        Category category = new Category();
-        category.setName(name);
-        return categoryRepository.save(category);
+    public void createCategory(CreateCategoryDTO createCategoryDTO) {
+        Category category = Category.builder()
+                .name(createCategoryDTO.getName())
+                .build();
+        categoryRepository.save(category);
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_CATEGORY));
+    public CategoryResponseDTO getCategoryById(Long id) {
+        Category category = this.categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_CATEGORY));
+        return CategoryResponseDTO.builder()
+                .name(category.getName())
+                .build();
     }
 
     public void deleteCategoryById(Long id) {
