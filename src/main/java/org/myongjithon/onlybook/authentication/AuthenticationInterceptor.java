@@ -11,8 +11,6 @@ import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.UUID;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -26,7 +24,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String accessToken = AuthenticationExtractor.extract(request);
         Long userId = Long.parseLong(jwtTokenProvider.getPayload(accessToken));
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorCode.USERID_NOT_FOUND));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
         authenticationContext.setPrincipal(user);
         return true;
     }

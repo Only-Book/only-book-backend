@@ -1,8 +1,10 @@
 package org.myongjithon.onlybook.domain.bookcase.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.myongjithon.onlybook.domain.BaseEntity;
 import org.myongjithon.onlybook.domain.book.entity.Book;
 import org.myongjithon.onlybook.domain.user.entity.User;
@@ -12,6 +14,8 @@ import java.util.List;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bookcase extends BaseEntity {
 
     @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
