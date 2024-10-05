@@ -1,3 +1,5 @@
+
+[2024] 명지대학교 명지톤
 # MyongJiThon
 
 ## 📠 Convention
@@ -82,4 +84,3 @@ master(main) ── develop ── feature
 
 </div>
 </details>
-
