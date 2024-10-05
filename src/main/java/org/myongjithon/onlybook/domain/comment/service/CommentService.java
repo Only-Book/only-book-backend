@@ -54,9 +54,12 @@ public class CommentService {
         return dtos;
     }
 
-    public void deleteComment(Long commentid) {
-        Optional<Comment> temp= commentRepository.findById(commentid);
-        temp.ifPresent(commentRepository::delete);
+    public void deleteComment(Long bookid, User user) {
+        Optional<Book> temp= bookRepository.findById(bookid);
+        Book book= new Book();
+        if(temp.isPresent())  book= temp.get();
+        Comment comment= commentRepository.findBybookAnduser(book,user);
+        commentRepository.delete(comment);
     }
 }
 
