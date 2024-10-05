@@ -20,4 +20,6 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "book")
     @JsonBackReference
     private Book book;
+
+    private String content;
 }

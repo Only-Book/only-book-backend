@@ -34,6 +34,8 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private LocalDate publish_date;
 
+    @Column(nullable = false)
+    private String imgUrl;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference
