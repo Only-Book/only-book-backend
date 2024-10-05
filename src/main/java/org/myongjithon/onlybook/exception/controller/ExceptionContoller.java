@@ -1,20 +1,23 @@
-package org.myongjithon.onlybook.exception.advice;
+package org.myongjithon.onlybook.exception.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.myongjithon.onlybook.exception.response.ErrorResponseDto;
 import org.myongjithon.onlybook.exception.CustomException;
+import org.myongjithon.onlybook.exception.DtoValidationException;
 import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionController {
-
+public class ExceptionContoller {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponseDto> handleCustomException(CustomException customException){
         writeLog(customException);
@@ -22,6 +25,19 @@ public class ExceptionController {
         return new ResponseEntity<>(ErrorResponseDto.res(customException), httpStatus);
     }
 
+    @ExceptionHandler({ValidationException.class, MethodArgumentNotValidException.class})
+    public ResponseEntity<ErrorResponseDto> handleCustomException(MethodArgumentNotValidException methodArgumentNotValidException){
+        FieldError fieldError = methodArgumentNotValidException.getBindingResult().getFieldError();
+        if(fieldError == null){
+            return new ResponseEntity<>(ErrorResponseDto.res(String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                    methodArgumentNotValidException), HttpStatus.BAD_REQUEST);
+        }
+        ErrorCode validationErrorCode = ErrorCode.resolveValidationErrorCode(fieldError.getCode());
+        String detail = fieldError.getDefaultMessage();
+        DtoValidationException dtoValidationException = new DtoValidationException(validationErrorCode, detail);
+        this.writeLog(dtoValidationException);
+        return new ResponseEntity<>(ErrorResponseDto.res(dtoValidationException),HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException){
