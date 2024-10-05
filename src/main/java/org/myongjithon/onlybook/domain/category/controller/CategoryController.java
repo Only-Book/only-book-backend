@@ -1,6 +1,9 @@
 package org.myongjithon.onlybook.domain.category.controller;
 
+import lombok.AllArgsConstructor;
 import org.myongjithon.onlybook.ResponseDto;
+import org.myongjithon.onlybook.domain.category.dto.CategoryResponseDTO;
+import org.myongjithon.onlybook.domain.category.dto.CreateCategoryDTO;
 import org.myongjithon.onlybook.domain.category.entity.Category;
 import org.myongjithon.onlybook.domain.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,32 +16,26 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")
+@AllArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestParam String name) {
-        Category createdCategory = categoryService.createCategory(name);
-        return ResponseEntity.ok(createdCategory);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.getAllCategories();
-        return ResponseEntity.ok(categories);
+    public ResponseEntity<ResponseDto<Void>> createCategory(@RequestParam CreateCategoryDTO createCategoryDTO) {
+        categoryService.createCategory(createCategoryDTO);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.CREATED, "카테고리 생성 성공"), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDto<Category>> getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.getCategoryById(id);
-        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "카테고리 조회 성공", category), HttpStatus.OK);
+    public ResponseEntity<ResponseDto<CategoryResponseDTO>> getCategoryById(@PathVariable Long id) {
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(id);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "카테고리 조회 성공", categoryResponseDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto<Void>> deleteCategoryById(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "카테고리 삭제 성공"), HttpStatus.OK);
     }
 }
