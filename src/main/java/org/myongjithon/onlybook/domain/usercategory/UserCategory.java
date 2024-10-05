@@ -11,8 +11,7 @@ import org.myongjithon.onlybook.domain.user.entity.User;
 
 @Entity(name = "user_category")
 @Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCategory extends BaseEntity {
