@@ -23,8 +23,4 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<CommentDTO> getAllComment(User user) {
-        List<Comment> comments= commentRepository.findByUser(user);
-
-    }
 }

@@ -17,16 +17,16 @@ import java.util.List;
 public class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
-    private String user_id;
+    private String userId;
 
     @Column(nullable = false)
-    private String user_pw;
+    private String userPw;
 
     @Column(nullable = false)
     private String nickname;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<UserCategory> user_category;
+    private List<UserCategory> userCategory;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments;
