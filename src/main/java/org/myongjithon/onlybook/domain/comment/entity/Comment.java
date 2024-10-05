@@ -2,6 +2,7 @@ package org.myongjithon.onlybook.domain.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.myongjithon.onlybook.domain.BaseEntity;
 import org.myongjithon.onlybook.domain.book.entity.Book;
@@ -9,6 +10,7 @@ import org.myongjithon.onlybook.domain.user.entity.User;
 
 @Entity
 @Data
+@Builder
 public class Comment extends BaseEntity {
 
     @ManyToOne

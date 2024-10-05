@@ -9,7 +9,7 @@ import org.myongjithon.onlybook.domain.usercategory.UserCategory;
 
 import java.util.List;
 
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
