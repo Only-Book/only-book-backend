@@ -1,8 +1,10 @@
 package org.myongjithon.onlybook.domain.category.controller;
 
+import org.myongjithon.onlybook.ResponseDto;
 import org.myongjithon.onlybook.domain.category.entity.Category;
 import org.myongjithon.onlybook.domain.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +31,9 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Optional<Category> category = categoryService.getCategoryById(id);
-        return category.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ResponseDto<Category>> getCategoryById(@PathVariable Long id) {
+        Category category = categoryService.getCategoryById(id);
+        return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "카테고리 조회 성공", category), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
