@@ -17,13 +17,11 @@ import java.util.List;
 @Data
 public class Book extends BaseEntity {
 
-
     private String title;
 
     private String author;
 
     private String price;
-
 
     private String description;
     @ManyToOne
@@ -31,7 +29,7 @@ public class Book extends BaseEntity {
     private Category category;
 
     @Column(nullable = false)
-    private LocalDate publish_date;
+    private LocalDate publishDate;
 
     @Column(nullable = false)
     private String imgUrl;
@@ -43,5 +41,4 @@ public class Book extends BaseEntity {
     @JsonManagedReference
     private List<Comment> comments;
 
-    private LocalDate publishDate;
 }

@@ -8,7 +8,7 @@ import org.myongjithon.onlybook.authentication.PasswordHashEncryption;
 import org.myongjithon.onlybook.domain.bookcase.entity.Bookcase;
 import org.myongjithon.onlybook.domain.bookcase.repository.BookcaseRepository;
 import org.myongjithon.onlybook.domain.category.entity.Category;
-import org.myongjithon.onlybook.domain.category.entity.CategoryRepository;
+import org.myongjithon.onlybook.domain.category.repository.CategoryRepository;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
 import org.myongjithon.onlybook.domain.user.dto.auth.LoginDto;
 import org.myongjithon.onlybook.domain.user.dto.user.CreateUserDto;

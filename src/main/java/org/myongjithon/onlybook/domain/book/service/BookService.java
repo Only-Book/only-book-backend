@@ -1,5 +1,7 @@
 package org.myongjithon.onlybook.domain.book.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.myongjithon.onlybook.domain.book.dto.BookDTO;
 import org.myongjithon.onlybook.domain.book.entity.Book;
 import org.myongjithon.onlybook.domain.book.repository.BookRepository;
@@ -13,13 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BookService {
 
     @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
     private RecommendRepository recommendRepository;
