@@ -35,4 +35,5 @@ public class CommentController {
     public List<CommentDTO> getAllComment(@AuthenticatedUser User user) {
         return commentService.getAllComment(user);
     }
+
 }

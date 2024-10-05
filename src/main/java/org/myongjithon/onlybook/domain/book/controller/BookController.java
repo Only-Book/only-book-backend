@@ -3,6 +3,7 @@ package org.myongjithon.onlybook.domain.book.controller;
 import org.myongjithon.onlybook.annotation.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 import org.myongjithon.onlybook.ResponseDto;
+import org.myongjithon.onlybook.domain.book.dto.BookCommentResponseDTO;
 import org.myongjithon.onlybook.domain.book.dto.BookDTO;
 import org.myongjithon.onlybook.domain.book.service.BookService;
 import org.myongjithon.onlybook.domain.user.entity.User;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -33,6 +36,11 @@ public class BookController {
     @DeleteMapping("/{bookid}/recommend")
     public void deleteRecommend(@PathVariable Long bookid){
         bookService.deleteRecommend(bookid);
+    }
+
+    @GetMapping("/{bookid}/comments")
+    public List<BookCommentResponseDTO> getComments(@PathVariable Long bookid){
+        return bookService.getComments(bookid);
     }
 
 
