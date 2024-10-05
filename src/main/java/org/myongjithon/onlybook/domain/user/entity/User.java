@@ -1,27 +1,23 @@
 package org.myongjithon.onlybook.domain.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.myongjithon.onlybook.domain.BaseEntity;
 
-@Data
-@Entity
-@Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Builder
+@Entity(name = "user")
+public class User extends BaseEntity {
 
-    private String userPw;
-    private String nickName;
+    @Column(unique = true, nullable = false)
+    private String user_id;
+
+    @Column(nullable = false)
+    private String user_pw;
+
+    @Column(nullable = false)
+    private String nickname;
 
 }

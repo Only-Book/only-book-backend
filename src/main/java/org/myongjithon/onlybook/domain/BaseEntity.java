@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook.entity;
+package org.myongjithon.onlybook.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
