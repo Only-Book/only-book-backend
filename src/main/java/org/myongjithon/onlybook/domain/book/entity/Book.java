@@ -42,6 +42,6 @@ public class Book extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "bookcase")
     @JsonBackReference
-    private Bookcase bookcases;
+    private Bookcase bookcase;
 
 }
