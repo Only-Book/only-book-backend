@@ -9,10 +9,10 @@ import org.myongjithon.onlybook.domain.comment.Comment;
 
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "user")
 public class User extends BaseEntity {
 
@@ -30,5 +30,8 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Bookcase bookcase;
 
 }
