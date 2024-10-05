@@ -6,7 +6,8 @@ import org.myongjithon.onlybook.domain.book.entity.Book;
 @Data
 public class CommentDTO {
 
-    private Long id;
     private String content;
-    private Book book;
+    private String title;
+    private String imgUrl;
+
 }

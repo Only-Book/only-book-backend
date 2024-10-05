@@ -37,6 +37,9 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private String imgUrl;
 
+    @Column(nullable = false)
+    private int recommend;
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Comment> comments;
@@ -45,5 +48,7 @@ public class Book extends BaseEntity {
     @JoinColumn(name = "bookcase")
     @JsonBackReference
     private Bookcase bookcase;
+
+
 
 }
