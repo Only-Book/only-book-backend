@@ -1,20 +1,38 @@
 package org.myongjithon.onlybook.domain.book.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.myongjithon.onlybook.domain.BaseEntity;
+import org.myongjithon.onlybook.domain.category.entity.Category;
+import org.myongjithon.onlybook.domain.comment.Comment;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-
+@Data
 public class Book extends BaseEntity {
-
-
+    @Column(nullable = false)
     private String title;
-    private String publish_date;
+
+    @Column(nullable = false)
     private String author;
+
+    @Column(nullable = false)
     private String price;
+
+    @Column(nullable = false)
     private String description;
-    private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Column(nullable = false)
+    private LocalDate publish_date;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+
 }
