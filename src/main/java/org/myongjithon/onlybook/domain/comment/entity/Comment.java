@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook.domain.comment;
+package org.myongjithon.onlybook.domain.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

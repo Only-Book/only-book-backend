@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook.domain.bookcase;
+package org.myongjithon.onlybook.domain.bookcase.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

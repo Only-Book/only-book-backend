@@ -4,15 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.myongjithon.onlybook.domain.BaseEntity;
 import org.myongjithon.onlybook.domain.category.entity.Category;
-import org.myongjithon.onlybook.domain.comment.Comment;
+import org.myongjithon.onlybook.domain.comment.entity.Comment;
 
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import org.myongjithon.onlybook.domain.BaseEntity;
-import org.myongjithon.onlybook.domain.bookcase.Bookcase;
-import org.myongjithon.onlybook.domain.comment.Comment;
+import org.myongjithon.onlybook.domain.bookcase.entity.Bookcase;
 
 import java.util.List;
 

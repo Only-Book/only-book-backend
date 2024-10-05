@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook.domain.comment;
+package org.myongjithon.onlybook.domain.comment.controller;
 
 import org.springframework.stereotype.Controller;
 
