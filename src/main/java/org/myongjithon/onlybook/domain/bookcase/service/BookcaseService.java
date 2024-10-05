@@ -1,6 +1,7 @@
 package org.myongjithon.onlybook.domain.bookcase.service;
 
 import org.myongjithon.onlybook.domain.book.dto.BookResponseDTO;
+import org.myongjithon.onlybook.domain.book.dto.BookResponseListDto;
 import org.myongjithon.onlybook.domain.book.entity.Book;
 
 import org.myongjithon.onlybook.domain.recommend.Recommend;
@@ -22,7 +23,7 @@ public class BookcaseService {
     }
 
 
-    public List<BookResponseDTO> getAllrecommend(User user) {
+    public BookResponseListDto getAllrecommend(User user) {
         List<Recommend> books= recommendRepository.findByuser(user);
         List<BookResponseDTO> dtos= new ArrayList<>();
         for (Recommend book: books){
@@ -34,8 +35,9 @@ public class BookcaseService {
             dto.setRecommend(newbook.getRecommend());
             dtos.add(dto);
         }
-
-        return dtos;
+        return BookResponseListDto.builder()
+                .bookResponseDTOList(dtos)
+                .build();
     }
 
 

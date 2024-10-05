@@ -11,11 +11,11 @@ import org.myongjithon.onlybook.domain.user.entity.User;
 public class Recommend extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book", nullable = false)
     private Book book;
 
 }

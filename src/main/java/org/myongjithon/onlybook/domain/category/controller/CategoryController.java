@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import org.myongjithon.onlybook.ResponseDto;
 import org.myongjithon.onlybook.domain.category.dto.CategoryResponseDTO;
 import org.myongjithon.onlybook.domain.category.dto.CreateCategoryDTO;
-import org.myongjithon.onlybook.domain.category.entity.Category;
 import org.myongjithon.onlybook.domain.category.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/categories")

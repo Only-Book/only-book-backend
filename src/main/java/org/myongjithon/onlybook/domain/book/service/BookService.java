@@ -1,8 +1,8 @@
 package org.myongjithon.onlybook.domain.book.service;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.myongjithon.onlybook.domain.book.dto.BookCommentResponseDTO;
+import org.myongjithon.onlybook.domain.book.dto.BookCommentResponseListDto;
 import org.myongjithon.onlybook.domain.book.dto.BookDTO;
 import org.myongjithon.onlybook.domain.book.entity.Book;
 import org.myongjithon.onlybook.domain.book.repository.BookRepository;
@@ -12,6 +12,8 @@ import org.myongjithon.onlybook.domain.comment.repository.CommentRepository;
 import org.myongjithon.onlybook.domain.recommend.Recommend;
 import org.myongjithon.onlybook.domain.recommend.RecommendRepository;
 import org.myongjithon.onlybook.domain.user.entity.User;
+import org.myongjithon.onlybook.exception.NotFoundException;
+import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +25,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BookService {
 
-    @Autowired
     private final BookRepository bookRepository;
-
-    @Autowired
-    private final CategoryRepository categoryRepository;
-
-    @Autowired
-    private RecommendRepository recommendRepository;
-
-    @Autowired
+    private final RecommendRepository recommendRepository;
     private final CommentRepository commentRepository;
 
     public BookDTO getBookDetails(Long id) {
@@ -53,9 +47,7 @@ public class BookService {
     }
 
     public void createRecommend(Long bookid, User user) {
-        Optional<Book> temp= bookRepository.findById(bookid);
-        Book book= new Book();
-        if(temp.isPresent())  book= temp.get();
+        Book book= bookRepository.findById(bookid).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_BOOK));
         book.setRecommend(book.getRecommend()+1);
         bookRepository.save(book);
         Recommend recommend= new Recommend();
@@ -65,20 +57,16 @@ public class BookService {
     }
 
     public void deleteRecommend(Long bookid) {
-        Optional<Book> temp= bookRepository.findById(bookid);
-        Book book= new Book();
-        if(temp.isPresent())  book= temp.get();
+        Book book= bookRepository.findById(bookid).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_BOOK));
         book.setRecommend(book.getRecommend()-1);
         bookRepository.save(book);
         Recommend recommend= recommendRepository.findBybook(book);
         recommendRepository.delete(recommend);
     }
 
-    public List<BookCommentResponseDTO> getComments(Long bookid) {
-        Optional<Book> temp= bookRepository.findById(bookid);
+    public BookCommentResponseListDto getComments(Long bookid) {
+        Book book= bookRepository.findById(bookid).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_BOOK));
         List<BookCommentResponseDTO> dtos= new ArrayList<>();
-        Book book= new Book();
-        if(temp.isPresent())  book= temp.get();
         List<Comment> comments= commentRepository.findBybook(book);
         for(Comment comment: comments){
             BookCommentResponseDTO dto= new BookCommentResponseDTO();
@@ -86,6 +74,9 @@ public class BookService {
             dto.setNickname(comment.getUser().getNickname());
             dtos.add(dto);
         }
-        return dtos;
+
+        return BookCommentResponseListDto.builder()
+                .bookCommentResponseDTOList(dtos)
+                .build();
     }
 }
