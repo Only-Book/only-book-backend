@@ -24,12 +24,20 @@ public class Book extends BaseEntity {
 
     private String price;
 
-    private String imgUrl;
 
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @Column(nullable = false)
+    private LocalDate publish_date;
+
+    @Column(nullable = false)
+    private String imgUrl;
+
+    @Column(nullable = false)
+    private int recommend;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference

@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook;
+package org.myongjithon.onlybook.exception.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
