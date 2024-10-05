@@ -16,26 +16,20 @@ import java.util.List;
 @Entity
 @Data
 public class Book extends BaseEntity {
-    @Column(nullable = false)
+
+
     private String title;
 
-    @Column(nullable = false)
     private String author;
 
-    @Column(nullable = false)
     private String price;
 
-    @Column(nullable = false)
+    private String imgUrl;
+
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-    @Column(nullable = false)
-    private LocalDate publish_date;
-
-    @Column(nullable = false)
-    private String imgUrl;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -46,4 +40,6 @@ public class Book extends BaseEntity {
     @JsonBackReference
     private Bookcase bookcase;
 
+
+    private LocalDate publishDate;
 }

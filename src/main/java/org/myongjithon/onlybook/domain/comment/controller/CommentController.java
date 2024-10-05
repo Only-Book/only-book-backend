@@ -23,10 +23,10 @@ public class CommentController {
     public void createComment(@RequestBody Comment comment){
         commentService.createComment(comment);
     }
-
+/*
     @GetMapping("/all")
     public List<CommentDTO> getAllComment(@RequestBody User user){
         return commentService.getAllComment(user);
     }
-
+*/
 }

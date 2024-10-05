@@ -22,9 +22,9 @@ public class CommentService {
     public void createComment(Comment comment) {
         commentRepository.save(comment);
     }
-
+/*
     public List<CommentDTO> getAllComment(User user) {
         List<Comment> comments= commentRepository.findByUser(user);
 
-    }
+    }*/
 }
