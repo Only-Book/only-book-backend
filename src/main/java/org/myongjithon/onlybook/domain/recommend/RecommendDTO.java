@@ -1,4 +1,4 @@
-package org.myongjithon.onlybook.domain.bookcase.dto;
+package org.myongjithon.onlybook.domain.recommend;
 
 import lombok.Data;
 

@@ -4,9 +4,12 @@ import org.myongjithon.onlybook.domain.book.entity.Book;
 import org.myongjithon.onlybook.domain.book.repository.BookRepository;
 import org.myongjithon.onlybook.domain.comment.dto.CommentCreateDTO;
 import org.myongjithon.onlybook.domain.comment.dto.CommentDTO;
+import org.myongjithon.onlybook.domain.comment.dto.CommentListDto;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
 import org.myongjithon.onlybook.domain.comment.repository.CommentRepository;
 import org.myongjithon.onlybook.domain.user.entity.User;
+import org.myongjithon.onlybook.exception.NotFoundException;
+import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,7 @@ public class CommentService {
     }
 
     public void createComment(CommentCreateDTO comment, Long bookid, User user) {
-        Optional<Book> temp= bookRepository.findById(bookid);
-        Book book= new Book();
-        if(temp.isPresent())  book= temp.get();
+        Book book= bookRepository.findById(bookid).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_BOOK));
         Comment newcomment= new Comment();
         newcomment.setContent(comment.getContent());
         newcomment.setBook(book);
@@ -39,7 +40,7 @@ public class CommentService {
         commentRepository.save(newcomment);
     }
 
-    public List<CommentDTO> getAllComment(User user) {
+    public CommentListDto getAllComment(User user) {
         List<Comment> comments= commentRepository.findByUser(user);
 
         List<CommentDTO> dtos=  new ArrayList<>();
@@ -51,14 +52,15 @@ public class CommentService {
             dto.setImgUrl(book.getImgUrl());
             dtos.add(dto);
         }
-        return dtos;
+        return CommentListDto.builder()
+                .CommentDtolist(dtos)
+                .build();
+
     }
 
     public void deleteComment(Long bookid, User user) {
-        Optional<Book> temp= bookRepository.findById(bookid);
-        Book book= new Book();
-        if(temp.isPresent())  book= temp.get();
-        Comment comment= commentRepository.findBybookAnduser(book,user);
+        Book book= bookRepository.findById(bookid).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_BOOK));
+        Comment comment= commentRepository.findBybookAndUser(book,user);
         commentRepository.delete(comment);
     }
 }

@@ -25,6 +25,7 @@ public enum ErrorCode {
     //NotFoundException
     USER_NOT_FOUND("4040","존재하지 않는 사용자 입니다"),
     NOT_FOUND_CATEGORY("4041", "존재하지 않는 카테고리 입니다"),
+    NOT_FOUND_BOOK("4042", "존재하지 않는 책입니다."),
 
 
 
