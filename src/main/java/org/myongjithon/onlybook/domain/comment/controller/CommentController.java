@@ -4,6 +4,7 @@ import jakarta.websocket.server.PathParam;
 import org.myongjithon.onlybook.annotation.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.myongjithon.onlybook.domain.comment.dto.CommentCreateDTO;
 import org.myongjithon.onlybook.domain.comment.dto.CommentDTO;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
 import org.myongjithon.onlybook.domain.comment.service.CommentService;
@@ -15,22 +16,22 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/comment")
+@RequestMapping("api/comments")
 public class CommentController {
     @Autowired
     private final CommentService commentService;
 
-    @PostMapping("/create")
-    public void createComment(@RequestBody Comment comment) {
-        commentService.createComment(comment);
+    @PostMapping("/{bookid}")
+    public void createComment(@RequestBody CommentCreateDTO comment, @PathVariable Long bookid, @AuthenticatedUser User user) {
+        commentService.createComment(comment, bookid, user);
     }
 
-    @DeleteMapping("/delete/{commentid}")
+    @DeleteMapping("/{commentid}")
     public void deleteComment(@PathVariable Long commentid) {
         commentService.deleteComment(commentid);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<CommentDTO> getAllComment(@AuthenticatedUser User user) {
         return commentService.getAllComment(user);
     }

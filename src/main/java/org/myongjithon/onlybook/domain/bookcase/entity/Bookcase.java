@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.myongjithon.onlybook.domain.BaseEntity;
 import org.myongjithon.onlybook.domain.book.entity.Book;
+import org.myongjithon.onlybook.domain.recommend.Recommend;
 import org.myongjithon.onlybook.domain.user.entity.User;
 
 import java.util.List;
@@ -18,8 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Bookcase extends BaseEntity {
 
-    @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Book> books;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Recommend> recommends;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)

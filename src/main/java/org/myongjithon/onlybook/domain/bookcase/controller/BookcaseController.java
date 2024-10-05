@@ -19,18 +19,8 @@ public class BookcaseController {
         this.bookcaseService = bookcaseService;
     }
 
-    @PostMapping("/{bookid}")
-    public void recommendBook(@AuthenticatedUser User user, @PathVariable Long bookid){
-        bookcaseService.recommendBook(user, bookid);
-    }
-
-    @DeleteMapping("/delete/{bookid}")
-    public void deleteComment(@AuthenticatedUser User user, @PathVariable Long bookid){
-        bookcaseService.deleteComment(user,bookid);
-    }
-
-    @GetMapping("/all")
-    public List<BookResponseDTO> getAllrecommend(@RequestBody User user){
+    @GetMapping()
+    public List<BookResponseDTO> getAllrecommend(@AuthenticatedUser User user){
         return bookcaseService.getAllrecommend(user);
     }
 

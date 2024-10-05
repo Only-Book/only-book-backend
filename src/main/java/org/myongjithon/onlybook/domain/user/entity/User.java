@@ -5,6 +5,7 @@ import lombok.*;
 import org.myongjithon.onlybook.domain.BaseEntity;
 import org.myongjithon.onlybook.domain.bookcase.entity.Bookcase;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
+import org.myongjithon.onlybook.domain.recommend.Recommend;
 import org.myongjithon.onlybook.domain.usercategory.UserCategory;
 
 import java.util.List;
@@ -33,5 +34,8 @@ public class User extends BaseEntity {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Bookcase bookcase;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Recommend> recommends;
 
 }

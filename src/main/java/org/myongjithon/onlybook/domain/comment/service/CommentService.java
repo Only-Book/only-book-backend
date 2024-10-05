@@ -1,6 +1,8 @@
 package org.myongjithon.onlybook.domain.comment.service;
 
 import org.myongjithon.onlybook.domain.book.entity.Book;
+import org.myongjithon.onlybook.domain.book.repository.BookRepository;
+import org.myongjithon.onlybook.domain.comment.dto.CommentCreateDTO;
 import org.myongjithon.onlybook.domain.comment.dto.CommentDTO;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
 import org.myongjithon.onlybook.domain.comment.repository.CommentRepository;
@@ -18,12 +20,23 @@ public class CommentService {
     @Autowired
     private final CommentRepository commentRepository;
 
-    public CommentService(CommentRepository commentRepository) {
+    @Autowired
+    private final BookRepository bookRepository;
+
+    public CommentService(CommentRepository commentRepository, BookRepository bookRepository) {
         this.commentRepository = commentRepository;
+        this.bookRepository = bookRepository;
     }
 
-    public void createComment(Comment comment) {
-        commentRepository.save(comment);
+    public void createComment(CommentCreateDTO comment, Long bookid, User user) {
+        Optional<Book> temp= bookRepository.findById(bookid);
+        Book book= new Book();
+        if(temp.isPresent())  book= temp.get();
+        Comment newcomment= new Comment();
+        newcomment.setContent(comment.getContent());
+        newcomment.setBook(book);
+        newcomment.setUser(user);
+        commentRepository.save(newcomment);
     }
 
     public List<CommentDTO> getAllComment(User user) {

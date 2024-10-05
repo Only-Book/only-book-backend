@@ -43,11 +43,5 @@ public class Book extends BaseEntity {
     @JsonManagedReference
     private List<Comment> comments;
 
-    @ManyToOne
-    @JoinColumn(name = "bookcase")
-    @JsonBackReference
-    private Bookcase bookcase;
-
-
     private LocalDate publishDate;
 }
