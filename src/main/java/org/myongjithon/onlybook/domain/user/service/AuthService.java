@@ -2,9 +2,11 @@ package org.myongjithon.onlybook.domain.user.service;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.myongjithon.onlybook.authentication.JwtEncoder;
+import org.myongjithon.onlybook.authentication.JwtTokenProvider;
 import org.myongjithon.onlybook.authentication.PasswordHashEncryption;
 import org.myongjithon.onlybook.domain.bookcase.entity.Bookcase;
-import org.myongjithon.onlybook.domain.bookcase.entity.BookcaseRepository;
+import org.myongjithon.onlybook.domain.bookcase.repository.BookcaseRepository;
 import org.myongjithon.onlybook.domain.category.entity.Category;
 import org.myongjithon.onlybook.domain.category.entity.CategoryRepository;
 import org.myongjithon.onlybook.domain.comment.entity.Comment;
@@ -16,9 +18,12 @@ import org.myongjithon.onlybook.domain.usercategory.UserCategory;
 import org.myongjithon.onlybook.domain.usercategory.UserCategoryRepository;
 import org.myongjithon.onlybook.exception.ConflictException;
 import org.myongjithon.onlybook.exception.NotFoundException;
+import org.myongjithon.onlybook.exception.UnauthorizedException;
 import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,20 +36,21 @@ public class AuthService {
     private final BookcaseRepository bookcaseRepository;
     private final CategoryRepository categoryRepository;
     private final UserCategoryRepository userCategoryRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 회원 가입
     public void createUser(CreateUserDto createUserDto) {
         // 아이디 중복 검사
-
+        this.isUserIdExist(createUserDto.getId());
 
         String encryptedPassword = this.passwordHashEncryption.encrypt(createUserDto.getPassword());
         List<Comment> comments = new ArrayList<>();
 
         // 유저 생성
         User user = User.builder()
-                .user_id(createUserDto.getId())
+                .userId(createUserDto.getId())
                 .nickname(createUserDto.getNickname())
-                .user_pw(encryptedPassword)
+                .userPw(encryptedPassword)
                 .comments(comments)
                 .build();
         userRepository.save(user);
@@ -67,14 +73,46 @@ public class AuthService {
 
     }
 
+    // 아이디 중복 검사
+    public void isUserIdExist(String user_id) {
+        User user = this.userRepository.findByUserId(user_id);
+        if (user != null) {
+            throw new ConflictException(ErrorCode.ID_ALREADY_EXISTS);
+        }
+    }
+
     // 로그인
     public void login(LoginDto loginDto, HttpServletResponse response) {
 
+        User user = this.userRepository.findByUserId(loginDto.getId());
+        if(user == null) {
+            throw new NotFoundException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        if (!passwordHashEncryption.matches(loginDto.getPassword(), user.getUserPw())) {
+            throw new UnauthorizedException(ErrorCode.UNAUTHORIZED_USER);
+        }
+
+        String payload = user.getId().toString();
+        String accessToken = jwtTokenProvider.createToken(payload);
+        ResponseCookie cookie = ResponseCookie.from("AccessToken", JwtEncoder.encodeJwtToken(accessToken))
+                .maxAge(Duration.ofMillis(1800000))
+                .httpOnly(true)
+                .sameSite("None").secure(true)
+                .path("/")
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 
     // 로그아웃
     public void logout(HttpServletResponse response) {
-
+        ResponseCookie cookie = ResponseCookie.from("AccessToken", null)
+                .maxAge(0)
+                .httpOnly(true)
+                .sameSite("None").secure(true)
+                .path("/")
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 
 }

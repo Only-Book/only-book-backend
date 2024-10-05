@@ -26,13 +26,14 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<CommentDTO> getAllComment(User user) {
+        pubic L
+
         List<Comment> comments= commentRepository.findByUser(user);
-        List<CommentDTO> dtos= new ArrayList<>();
-        for(Comment comment: comments){
-            CommentDTO dto= new CommentDTO();
-            Book book= comment.getBook();
-            dto.setContent(comment.getContent());
+        List<CommentDTO> dtos=  new ArrayList<>();
+        for(Comment comment:  comments){
+             CommentDTO dto=  new Commen tDTO();
+            Book book= com ment.getBook();
+            dto.setCo ntent(comment.getContent());
             dto.setTitle(book.getTitle());
             dto.setImgUrl(book.getImgUrl());
             dtos.add(dto);
