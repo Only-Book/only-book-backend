@@ -26,11 +26,12 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<CommentDTO> getAllComment(User user){
+    public List<CommentDTO> getAllComment(User user) {
         List<Comment> comments= commentRepository.findByUser(user);
+
         List<CommentDTO> dtos=  new ArrayList<>();
         for(Comment comment:  comments){
-             CommentDTO dto=  new CommentDTO();
+            CommentDTO dto=  new CommentDTO();
             Book book= comment.getBook();
             dto.setContent(comment.getContent());
             dto.setTitle(book.getTitle());
@@ -45,3 +46,6 @@ public class CommentService {
         temp.ifPresent(commentRepository::delete);
     }
 }
+
+
+

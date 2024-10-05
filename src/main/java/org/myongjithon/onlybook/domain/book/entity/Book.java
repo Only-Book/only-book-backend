@@ -16,16 +16,15 @@ import java.util.List;
 @Entity
 @Data
 public class Book extends BaseEntity {
-    @Column(nullable = false)
+
+
     private String title;
 
-    @Column(nullable = false)
     private String author;
 
-    @Column(nullable = false)
     private String price;
 
-    @Column(nullable = false)
+
     private String description;
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -50,5 +49,5 @@ public class Book extends BaseEntity {
     private Bookcase bookcase;
 
 
-
+    private LocalDate publishDate;
 }
