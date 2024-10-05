@@ -2,7 +2,7 @@ package org.myongjithon.onlybook.exception.advice;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.myongjithon.onlybook.ErrorResponseDto;
+import org.myongjithon.onlybook.exception.response.ErrorResponseDto;
 import org.myongjithon.onlybook.exception.CustomException;
 import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
 import org.springframework.http.HttpStatus;

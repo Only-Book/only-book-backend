@@ -2,6 +2,7 @@ package org.myongjithon.onlybook.domain.user.controller;
 
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.myongjithon.onlybook.ResponseDto;
 import org.myongjithon.onlybook.domain.user.dto.auth.LoginDto;
@@ -9,7 +10,6 @@ import org.myongjithon.onlybook.domain.user.dto.user.CreateUserDto;
 import org.myongjithon.onlybook.domain.user.service.AuthService;
 import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,14 +20,14 @@ public class AuthController {
 
     // 회원 가입
     @PostMapping("/auth/signin")
-    public ResponseEntity<ResponseDto<Void>> createUser(@Validated @RequestBody CreateUserDto createUserDto) {
+    public ResponseEntity<ResponseDto<Void>> createUser(@Valid @RequestBody CreateUserDto createUserDto) {
         this.authService.createUser(createUserDto);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "create User"), HttpStatus.OK);
     }
 
     // 로그인
     @PostMapping("/auth/login")
-    public ResponseEntity<ResponseDto<Void>> login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
+    public ResponseEntity<ResponseDto<Void>> login(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response) {
         this.authService.login(loginDto, response);
         return new ResponseEntity<>(ResponseDto.res(HttpStatus.OK, "login successfully"), HttpStatus.OK);
     }

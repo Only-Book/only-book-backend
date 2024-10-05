@@ -3,7 +3,7 @@ package org.myongjithon.onlybook.exception.controller;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.myongjithon.onlybook.ErrorResponseDto;
+import org.myongjithon.onlybook.exception.response.ErrorResponseDto;
 import org.myongjithon.onlybook.exception.CustomException;
 import org.myongjithon.onlybook.exception.DtoValidationException;
 import org.myongjithon.onlybook.exception.errorcode.ErrorCode;
