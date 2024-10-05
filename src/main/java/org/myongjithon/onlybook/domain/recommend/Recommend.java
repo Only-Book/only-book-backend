@@ -12,4 +12,5 @@ import org.myongjithon.onlybook.domain.BaseEntity;
 public class Recommend extends BaseEntity {
 
 
+
 }
