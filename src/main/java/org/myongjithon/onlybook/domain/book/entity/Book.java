@@ -30,6 +30,7 @@ public class Book extends BaseEntity {
 
     @Column(nullable = false)
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -45,6 +46,6 @@ public class Book extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "bookcase")
     @JsonBackReference
-    private Bookcase bookcases;
+    private Bookcase bookcase;
 
 }

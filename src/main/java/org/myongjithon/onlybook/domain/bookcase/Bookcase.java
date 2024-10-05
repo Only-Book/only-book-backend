@@ -13,11 +13,16 @@ import java.util.List;
 @Data
 public class Bookcase extends BaseEntity {
 
-    @OneToOne(mappedBy = "bookcase", cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "bookcase", cascade = CascadeType.ALL)
+//    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL)
-    @JsonManagedReference
+//    @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<Book> books;
+    @OneToMany(mappedBy = "bookcase", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Book> books;
 
 }
